@@ -1,31 +1,31 @@
-var body = document.body;
-var candidate;
-var array = [];
+"use strict";
+const { body } = document;
+let candidate;
+let array = [];
 function choosenNumber() {
     candidate = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     array = [];
-    for (var i = 0; i < 4; i++) {
-        var chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+    for (let i = 0; i < 4; i++) {
+        const chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
         array.push(chosen);
     }
 }
 choosenNumber();
-console.log(array);
-var result = document.createElement('h1');
+const result = document.createElement('h1');
 body.append(result);
-var form = document.createElement('form');
+const form = document.createElement('form');
 document.body.append(form);
-var input = document.createElement('input');
+const input = document.createElement('input');
 form.append(input);
 input.type = 'text';
 input.maxLength = 4;
-var button = document.createElement('button');
+const button = document.createElement('button');
 button.textContent = '입력!';
 form.append(button);
-var wrongCount = 0;
-form.addEventListener('submit', function (event) {
+let wrongCount = 0;
+form.addEventListener('submit', (event) => {
     event.preventDefault();
-    var answer = input.value;
+    const answer = input.value;
     if (answer === array.join('')) {
         result.textContent = '홈런';
         choosenNumber();
@@ -34,19 +34,19 @@ form.addEventListener('submit', function (event) {
         wrongCount = 0;
     }
     else {
-        var answerArray = answer.split('');
-        var strike = 0;
-        var ball = 0;
+        const answerArray = answer.split('');
+        let strike = 0;
+        let ball = 0;
         wrongCount += 1;
         if (wrongCount > 10) {
-            result.textContent = "10\uBC88 \uB118\uAC8C \uD2C0\uB824\uC11C \uC2E4\uD328! \uB2F5\uC740 " + array.join(',') + " \uC600\uC2B5\uB2C8\uB2E4!";
+            result.textContent = `10번 넘게 틀려서 실패! 답은 ${array.join(',')} 였습니다!`;
             choosenNumber();
             input.value = '';
             input.focus();
             wrongCount = 0;
         }
         else {
-            for (var i = 0; i < 4; i++) {
+            for (let i = 0; i < 4; i++) {
                 if (Number(answerArray[i]) === array[i]) {
                     strike += 1;
                 }
@@ -54,7 +54,7 @@ form.addEventListener('submit', function (event) {
                     ball += 1;
                 }
             }
-            result.textContent = strike + "\uC2A4\uD2B8\uB77C\uC774\uD06C " + ball + "\uBCFC\uC785\uB2C8\uB2E4.";
+            result.textContent = `${strike}스트라이크 ${ball}볼입니다.`;
             input.value = '';
             input.focus();
         }
